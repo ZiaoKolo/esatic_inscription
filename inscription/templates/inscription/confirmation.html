@@ -1,0 +1,71 @@
+{% extends 'inscription/base.html' %}
+
+{% block title %}ESATIC - Confirmation d'inscription{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-check-circle me-2"></i>Inscription réussie</h3>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="fas fa-check-circle text-success fa-5x mb-3"></i>
+                    <h2>Félicitations!</h2>
+                    <p class="lead">Votre demande d'inscription a été enregistrée avec succès.</p>
+                </div>
+                
+                <div class="alert alert-primary" role="alert">
+                    <h4 class="alert-heading">Informations importantes</h4>
+                    <p>Veuillez noter soigneusement votre code d'inscription. Il vous sera demandé pour toute communication ultérieure.</p>
+                    <hr>
+                    <h5 class="text-center">Votre code d'inscription: <span class="badge bg-primary fs-5">{{ candidat.code_inscription }}</span></h5>
+                </div>
+                
+                <div class="mt-4">
+                    <h4>Récapitulatif de votre inscription</h4>
+                    <table class="table table-bordered mt-3">
+                        <tbody>
+                            <tr>
+                                <th style="width: 30%;">Nom complet</th>
+                                <td>{{ candidat.nom }} {{ candidat.prenoms }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de naissance</th>
+                                <td>{{ candidat.date_naissance }}</td>
+                            </tr>
+                            <tr>
+                                <th>Filière choisie</th>
+                                <td>{{ candidat.get_filiere_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de soumission</th>
+                                <td>{{ candidat.date_soumission }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-4">
+                    <h4>Prochaines étapes</h4>
+                    <ul>
+                        <li>Un e-mail de confirmation a été envoyé à l'adresse <strong>{{ candidat.email }}</strong></li>
+                        <li>Vous pouvez télécharger votre reçu d'inscription ci-dessous</li>
+                        <li>Votre dossier sera examiné par notre service des admissions</li>
+                        <li>Vous serez informé des résultats dans un délai de deux semaines</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'telecharger_recu' candidat.pk %}" class="btn btn-primary">
+                    <i class="fas fa-download me-2"></i>Télécharger votre reçu
+                </a>
+                <a href="{% url 'accueil' %}" class="btn btn-secondary ms-2">
+                    <i class="fas fa-home me-2"></i>Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

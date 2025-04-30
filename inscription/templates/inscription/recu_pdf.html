@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reçu d'inscription - {{ candidat.code_inscription }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            color: #0056b3;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 18px;
+            margin-top: 0;
+        }
+        .confirmation-code {
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table td, table th {
+            padding: 8px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        table th {
+            text-align: left;
+            width: 40%;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        .signature {
+            margin-top: 60px;
+            text-align: right;
+            padding-right: 50px;
+        }
+        .warning {
+            margin-top: 30px;
+            font-style: italic;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ÉCOLE SUPÉRIEURE AFRICAINE DES TIC (ESATIC)</h1>
+        <p>Récépissé de candidature</p>
+    </div>
+
+    <p>Ce document atteste que le candidat dont les informations figurent ci-dessous a soumis sa candidature pour l'admission à l'ESATIC.</p>
+
+    <div class="confirmation-code">
+        Code d'inscription: {{ candidat.code_inscription }}
+    </div>
+
+    <h2>Informations du candidat</h2>
+    <table>
+        <tr>
+            <th>Nom:</th>
+            <td>{{ candidat.nom }}</td>
+        </tr>
+        <tr>
+            <th>Prénoms:</th>
+            <td>{{ candidat.prenoms }}</td>
+        </tr>
+        <tr>
+            <th>Date de naissance:</th>
+            <td>{{ candidat.date_naissance|date:"d/m/Y" }}</td>
+        </tr>
+        <tr>
+            <th>Lieu de naissance:</th>
+            <td>{{ candidat.lieu_naissance }}</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>{{ candidat.email }}</td>
+        </tr>
+        <tr>
+            <th>Téléphone:</th>
+            <td>{{ candidat.telephone }}</td>
+        </tr>
+        <tr>
+            <th>Filière choisie:</th>
+            <td>{{ candidat.get_filiere_display }}</td>
+        </tr>
+        <tr>
+            <th>Date de soumission:</th>
+            <td>{{ candidat.date_soumission|date:"d/m/Y à H:i" }}</td>
+        </tr>
+    </table>
+
+    <h2>Documents soumis</h2>
+    <ul>
+        <li>Copie de la Carte Nationale d'Identité</li>
+        <li>Copie du diplôme</li>
+        <li>Photo d'identité</li>
+    </ul>
+
+    <div class="warning">
+        <p>Ce reçu constitue la preuve de votre inscription. Veuillez le conserver précieusement et présenter le code d'inscription pour toute communication relative à votre candidature.</p>
+    </div>
+
+    <div class="signature">
+        <p>Service des inscriptions</p>
+        <p>ESATIC</p>
+    </div>
+
+    <div class="footer">
+        <p>Document généré le {{ candidat.date_soumission|date:"d/m/Y à H:i" }}</p>
+        <p>ESATIC - École Supérieure Africaine des Technologies de l'Information et de la Communication</p>
+    </div>
+</body>
+</html>

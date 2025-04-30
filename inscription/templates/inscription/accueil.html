@@ -1,0 +1,121 @@
+{% extends 'inscription/base.html' %}
+
+{% block title %}ESATIC - Accueil{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto text-center mb-5">
+        <h1 class="display-4">Bienvenue à ESATIC</h1>
+        <p class="lead">École Supérieure Africaine des Technologies de l'Information et de la Communication</p>
+        <hr class="my-4">
+        <p>Plateforme d'inscription pour l'année académique 2025-2026</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-user-plus fa-4x mb-3 text-primary"></i>
+                <h3 class="card-title">Nouvelle Inscription</h3>
+                <p class="card-text">Inscrivez-vous pour l'année académique 2025-2026 en remplissant notre formulaire en ligne.</p>
+                <a href="{% url 'nouvelle_inscription' %}" class="btn btn-primary">S'inscrire</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-search fa-4x mb-3 text-primary"></i>
+                <h3 class="card-title">Vérifier Statut</h3>
+                <p class="card-text">Vérifiez le statut de votre inscription en utilisant votre code d'inscription.</p>
+                <a href="{% url 'verifier_statut' %}" class="btn btn-primary">Vérifier</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-info-circle fa-4x mb-3 text-primary"></i>
+                <h3 class="card-title">Informations</h3>
+                <p class="card-text">Découvrez nos filières, les conditions d'admission et le calendrier académique.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    En savoir plus
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header header-bg text-white">
+                <h4 class="mb-0">Filières disponibles</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-laptop-code me-2 text-primary"></i> Informatique</h5>
+                        <p>Formation en développement logiciel, bases de données, intelligence artificielle et systèmes d'information.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-network-wired me-2 text-primary"></i> Réseaux et Télécommunications</h5>
+                        <p>Formation en administration réseau, télécommunications, cloud computing et infrastructures IT.</p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-shield-alt me-2 text-primary"></i> Sécurité Informatique</h5>
+                        <p>Formation en cybersécurité, cryptographie, audit de sécurité et gestion des risques informatiques.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-th me-2 text-primary"></i> Autres Spécialités</h5>
+                        <p>Formations en multimédia, IoT, data science et autres domaines émergents des TIC.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour les informations supplémentaires -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header header-bg text-white">
+                <h5 class="modal-title" id="infoModalLabel">Informations académiques</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Conditions d'admission</h5>
+                <ul>
+                    <li>Être titulaire d'un baccalauréat ou diplôme équivalent</li>
+                    <li>Avoir moins de 25 ans pour les formations initiales</li>
+                    <li>Réussir le test d'admission (pour certaines filières)</li>
+                    <li>Présenter un dossier complet avec toutes les pièces justificatives</li>
+                </ul>
+                
+                <h5>Calendrier académique 2025-2026</h5>
+                <ul>
+                    <li><strong>Inscriptions:</strong> Mai - Août 2025</li>
+                    <li><strong>Tests d'admission:</strong> Septembre 2025</li>
+                    <li><strong>Début des cours:</strong> Octobre 2025</li>
+                    <li><strong>Fin du premier semestre:</strong> Février 2026</li>
+                    <li><strong>Fin de l'année académique:</strong> Juillet 2026</li>
+                </ul>
+                
+                <h5>Contact</h5>
+                <p>Pour plus d'informations, veuillez contacter le service des admissions:</p>
+                <p><i class="fas fa-envelope me-2"></i> admissions@esatic.edu.ci</p>
+                <p><i class="fas fa-phone me-2"></i> +225 27 XX XX XX</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

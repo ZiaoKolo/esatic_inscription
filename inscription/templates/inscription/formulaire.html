@@ -1,0 +1,213 @@
+{% extends 'inscription/base.html' %}
+
+{% block title %}ESATIC - Formulaire d'inscription{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-section {
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .required-field label:after {
+        content:" *";
+        color: red;
+    }
+    .custom-file-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .help-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <h1 class="text-center mb-4">Formulaire d'inscription</h1>
+        <p class="text-center mb-5">Veuillez remplir tous les champs obligatoires marqués d'un astérisque (*)</p>
+        
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            
+            <!-- Informations personnelles -->
+            <div class="form-section">
+                <h3 class="mb-4"><i class="fas fa-user me-2 text-primary"></i>Informations personnelles</h3>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6 required-field">
+                        <label for="{{ form.nom.id_for_label }}" class="form-label">Nom</label>
+                        <input type="text" class="form-control {% if form.nom.errors %}is-invalid{% endif %}" 
+                               id="{{ form.nom.id_for_label }}" name="{{ form.nom.html_name }}"
+                               value="{{ form.nom.value|default:'' }}">
+                        {% if form.nom.errors %}
+                            <div class="invalid-feedback">{{ form.nom.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 required-field">
+                        <label for="{{ form.prenoms.id_for_label }}" class="form-label">Prénoms</label>
+                        <input type="text" class="form-control {% if form.prenoms.errors %}is-invalid{% endif %}" 
+                               id="{{ form.prenoms.id_for_label }}" name="{{ form.prenoms.html_name }}"
+                               value="{{ form.prenoms.value|default:'' }}">
+                        {% if form.prenoms.errors %}
+                            <div class="invalid-feedback">{{ form.prenoms.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6 required-field">
+                        <label for="{{ form.date_naissance.id_for_label }}" class="form-label">Date de naissance</label>
+                        <input type="date" class="form-control {% if form.date_naissance.errors %}is-invalid{% endif %}" 
+                               id="{{ form.date_naissance.id_for_label }}" name="{{ form.date_naissance.html_name }}"
+                               value="{{ form.date_naissance.value|default:''|date:'Y-m-d' }}">
+                        {% if form.date_naissance.errors %}
+                            <div class="invalid-feedback">{{ form.date_naissance.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 required-field">
+                        <label for="{{ form.lieu_naissance.id_for_label }}" class="form-label">Lieu de naissance</label>
+                        <input type="text" class="form-control {% if form.lieu_naissance.errors %}is-invalid{% endif %}" 
+                               id="{{ form.lieu_naissance.id_for_label }}" name="{{ form.lieu_naissance.html_name }}"
+                               value="{{ form.lieu_naissance.value|default:'' }}">
+                        {% if form.lieu_naissance.errors %}
+                            <div class="invalid-feedback">{{ form.lieu_naissance.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Coordonnées -->
+            <div class="form-section">
+                <h3 class="mb-4"><i class="fas fa-address-book me-2 text-primary"></i>Coordonnées</h3>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6 required-field">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Adresse e-mail</label>
+                        <input type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                               id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}"
+                               value="{{ form.email.value|default:'' }}">
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback">{{ form.email.errors }}</div>
+                        {% endif %}
+                        <div class="help-text">Vous recevrez votre confirmation d'inscription à cette adresse</div>
+                    </div>
+                    <div class="col-md-6 required-field">
+                        <label for="{{ form.telephone.id_for_label }}" class="form-label">Numéro de téléphone</label>
+                        <input type="tel" class="form-control {% if form.telephone.errors %}is-invalid{% endif %}" 
+                               id="{{ form.telephone.id_for_label }}" name="{{ form.telephone.html_name }}"
+                               value="{{ form.telephone.value|default:'' }}" placeholder="Ex: +225 XX XX XX XX">
+                        {% if form.telephone.errors %}
+                            <div class="invalid-feedback">{{ form.telephone.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Choix de filière -->
+            <div class="form-section">
+                <h3 class="mb-4"><i class="fas fa-graduation-cap me-2 text-primary"></i>Choix de filière</h3>
+                
+                <div class="row mb-3">
+                    <div class="col-md-12 required-field">
+                        <label for="{{ form.filiere.id_for_label }}" class="form-label">Filière souhaitée</label>
+                        <select class="form-select {% if form.filiere.errors %}is-invalid{% endif %}" 
+                                id="{{ form.filiere.id_for_label }}" name="{{ form.filiere.html_name }}">
+                            <option value="" {% if not form.filiere.value %}selected{% endif %}>Choisir une filière</option>
+                            {% for choice in form.filiere.field.choices %}
+                                <option value="{{ choice.0 }}" {% if form.filiere.value == choice.0 %}selected{% endif %}>
+                                    {{ choice.1 }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        {% if form.filiere.errors %}
+                            <div class="invalid-feedback">{{ form.filiere.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Documents -->
+            <div class="form-section">
+                <h3 class="mb-4"><i class="fas fa-file-upload me-2 text-primary"></i>Documents requis</h3>
+                <p class="mb-3">Veuillez télécharger les documents suivants (formats acceptés: PDF, JPG, PNG)</p>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 required-field">
+                        <label for="{{ form.cni.id_for_label }}" class="form-label">Carte Nationale d'Identité</label>
+                        <input type="file" class="form-control {% if form.cni.errors %}is-invalid{% endif %}" 
+                               id="{{ form.cni.id_for_label }}" name="{{ form.cni.html_name }}">
+                        {% if form.cni.errors %}
+                            <div class="invalid-feedback">{{ form.cni.errors }}</div>
+                        {% endif %}
+                        <div class="help-text">Taille max: 5MB</div>
+                    </div>
+                    <div class="col-md-4 required-field">
+                        <label for="{{ form.diplome.id_for_label }}" class="form-label">Diplôme</label>
+                        <input type="file" class="form-control {% if form.diplome.errors %}is-invalid{% endif %}" 
+                               id="{{ form.diplome.id_for_label }}" name="{{ form.diplome.html_name }}">
+                        {% if form.diplome.errors %}
+                            <div class="invalid-feedback">{{ form.diplome.errors }}</div>
+                        {% endif %}
+                        <div class="help-text">Baccalauréat ou équivalent</div>
+                    </div>
+                    <div class="col-md-4 required-field">
+                        <label for="{{ form.photo.id_for_label }}" class="form-label">Photo d'identité</label>
+                        <input type="file" class="form-control {% if form.photo.errors %}is-invalid{% endif %}" 
+                               id="{{ form.photo.id_for_label }}" name="{{ form.photo.html_name }}">
+                        {% if form.photo.errors %}
+                            <div class="invalid-feedback">{{ form.photo.errors }}</div>
+                        {% endif %}
+                        <div class="help-text">Format 4x4, fond blanc</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boutons de soumission -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 mb-5">
+                <button type="reset" class="btn btn-secondary me-md-2">Réinitialiser</button>
+                <button type="submit" class="btn btn-primary">Soumettre l'inscription</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Afficher le nom du fichier sélectionné
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        
+        fileInputs.forEach(input => {
+            input.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name;
+                    const fileSize = Math.round(e.target.files[0].size / 1024); // KB
+                    
+                    // Ajouter une classe pour montrer que le fichier a été sélectionné
+                    e.target.classList.add('file-selected');
+                    
+                    // Afficher un feedback
+                    const feedbackDiv = document.createElement('div');
+                    feedbackDiv.className = 'file-feedback mt-1 small text-success';
+                    feedbackDiv.innerHTML = `<i class="fas fa-check-circle"></i> "${fileName}" (${fileSize} KB) sélectionné`;
+                    
+                    // Supprimer les anciens feedbacks
+                    const oldFeedbacks = e.target.parentNode.querySelectorAll('.file-feedback');
+                    oldFeedbacks.forEach(el => el.remove());
+                    
+                    e.target.parentNode.appendChild(feedbackDiv);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
